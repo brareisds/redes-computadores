@@ -24,6 +24,7 @@ int main (int argc, char *argv[]) {
 	struct hostent *hp;
 	char localhost [MAXHOSTNAME];
     struct in_addr **addr_list;
+    int dado;
 
     if (argc != 2) {
         puts("Uso correto: servidor <porta>");
@@ -88,12 +89,11 @@ int main (int argc, char *argv[]) {
 		puts ( "Nao consegui fazer o bind" );
 		exit (1);
 	}		
- 
+    dado = 0;
     /* listen() prepares it for incoming connections. */
 	listen (s, TAMFILA);
 
-    buf[0] = '0';
-	
+    
 	while (1){
 		i = sizeof(sa);
         /* accept estabelece uma conexão solicitada pelo cliente*/
@@ -102,18 +102,21 @@ int main (int argc, char *argv[]) {
             exit (1);
 		}	
 
-    
-        //int nread;
-        //nread = read(t, buf, BUFSIZ);
-        
-        printf("Sou o servidor, tenho a mensagem----> %d\n", atoi(buf));
-        //buf[1] = 'B';
-        write(t,buf, BUFSIZ);
-        //fflush(stdout);
-        /* Limpa o buffer buf para a próxima iteração do loop */
-        //buf[0] = '\0';
+        read(t, buf, BUFSIZ);
+        // Se a mensagem for do Cliente 1, envia o dado atual
+        if (strcmp(buf, "GET") == 0) {
+            sprintf(buf, "%d", dado);
+            printf("Sou o servidor, tenho a mensagem----> %d\n", dado);
+            write(t,buf, BUFSIZ);
+        }
 
-        /* Fecha o socket conectado ao cliente após o envio da mensagem de volta. */
+        // Se a mensagem for do Cliente 2, modifica o dado
+        if (strcmp(buf, "SET") == 0) {
+            read(t, buf, BUFSIZ);
+            //sprintf(buf, "%d", dado);
+            dado = atoi(buf);
+            printf("Dado modificado no servidor para: %d\n", dado);
+        }
         close(t);
    }
    exit(0);

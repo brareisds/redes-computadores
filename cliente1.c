@@ -67,16 +67,17 @@ int main(int argc, char *argv[]){
     //printf("CLI1 (struct sockaddr*)&sock_enderec %d\n", (struct sockaddr*)&sock_enderec);
 
     /* Transmissao dos dados */
-    // if(write(sock_descr, NULL, strlen(NULL)) != strlen(dados)){
-    //     puts("Não consegui fazer a transmissao");
-    //     exit(1);
-    // }
+    printf("Cliente 1 solicitando dado...\n");
+    if(write(sock_descr,  "GET" , strlen("GET")) != strlen("GET")){
+        puts("Não consegui fazer a transmissao");
+        exit(1);
+    }
 
     /* Recebe os dados. Comando que bloqueia */
     int nread;
     nread = read(sock_descr,buf,BUFSIZ);
     //buf[nread] = '\0';
-    printf("Sou o cliente 1, recebi da proxy a mensagem ---> %d\n",atoi(buf));
+    printf("Sou o cliente 1, recebi da proxy o dado: ---> %d\n",atoi(buf));
     //printf("bufsiz: %d\n", BUFSIZ);
     fflush(stdout);
     buf[0] = '\0';

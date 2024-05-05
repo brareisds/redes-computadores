@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
         }
 
 
-        
+        write(server_socket,  "GET" , strlen("GET"));
         int nread;
         nread = read(server_socket, buf, BUFSIZ);
         if(nread == -1) {

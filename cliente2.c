@@ -64,23 +64,14 @@ int main(int argc, char *argv[]){
         exit(1);
     }
 
-    /* Transmissao dos dados */
-    if(write(sock_descr,dados,strlen(dados)) != strlen(dados)){
-        puts("Não consegui fazer a transmissao");
-        exit(1);
-    }
-
+    // Envia uma mensagem para a proxy para modificar o dado
+    write(sock_descr,"SET" , strlen("SET"));
     
-    /* Recebe os dados. Comando que bloqueia */
-    int nread;
-    nread = read(sock_descr,buf,BUFSIZ);
-    buf[nread] = '\0';
-    printf("Sou o cliente, recebi %s\n",buf);
-    //printf("bufsiz: %d\n", BUFSIZ);
-    fflush(stdout);
-    buf[0] = '\0';
-    /* limpar lixo do buffer */
-    
+    printf("Modificando dado...\n");
+    // Solicita e envia o novo valor do dado
+    printf("Novo valor do dado: %d\n", atoi(dados));
+    //scanf("%s", buf);
+    write(sock_descr,dados,strlen(dados));
 
     close(sock_descr);
     exit(0);
