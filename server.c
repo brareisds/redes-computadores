@@ -1,30 +1,28 @@
-/* Um servidor TCP/IP Iterativo Iterativo ou Concorrente 
-   Elias P. Duarte Jr. 
-   Ultima Atualizacao: 17/08/22 */
-/*https://en.wikipedia.org/wiki/Berkeley_sockets*/
+/* 
+    Funcionalidade: Um servidor iterativo TCP/IP 
+    Autor: Barbara Reis
+    Data da última modificação: 6/maio/2024 
+*/
+
 #include <stdio.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <netinet/in.h>
-#include <netdb.h> // gethostbyname(localhost))
+#include <netdb.h> 
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <arpa/inet.h> // add por mim -> Functions for manipulating numeric IP addresses.
 
 #define TAMFILA      5
 #define MAXHOSTNAME 30
 
 int main (int argc, char *argv[]) {
-	int s, t;
-	int i;
-    char buf [BUFSIZ + 1];
-	struct sockaddr_in sa, isa;
+	int server_socket, client_socket, serveraddrsize, nread;
+    char buffer [ BUFSIZ + 1];
+	struct sockaddr_in serveraddr, clientaddr;
 	struct hostent *hp;
 	char localhost [MAXHOSTNAME];
-    struct in_addr **addr_list;
-    int dado;
+    int dado = 0; // inicializa o dado no servidor com o valor 0
 
     if (argc != 2) {
         puts("Uso correto: servidor <porta>");
@@ -32,92 +30,73 @@ int main (int argc, char *argv[]) {
     }
 
     /* returns the null-terminated hostname in the character array localhost, which has a length of len bytes*/
-	/* int gethostname(char *name, size_t len); */
     gethostname (localhost, MAXHOSTNAME);
-    printf("localhost: %s\n", localhost);
 
-
-    
 	if ((hp = gethostbyname(localhost)) == NULL){
 		puts ("Nao consegui meu proprio IP");
 		exit (1);
 	}	
 
-    // --------------------------------------------------------------------------------
-    printf("Host name: %s\n", hp->h_name);
-    printf("Aliases:\n");
-    for (int i = 0; hp->h_aliases[i] != NULL; i++) {
-        printf("\t%s\n", hp->h_aliases[i]);
-    }
-    
-    printf("Address type: %d\n", hp->h_addrtype);
-    printf("Address length: %d\n", hp->h_length);
-    
-    printf("Addresses:\n");
-    /* inet_ntoa converte um endereço IP de formato binário para uma representação em string legível. */
-    /* lista de enderecos PERGUNTA */
-    for (int i = 0; hp->h_addr_list[i] != NULL; i++) {
-        printf("%s\n", inet_ntoa(*(struct in_addr*)(hp->h_addr_list[i])));
-    }
-    printf("(char *) hp->h_addr: %s\n",(char *) hp->h_addr);
+    /* copia o end. IP que veio do dns para a estrutura socketaddr_in do socket serveraddr*/
+	bcopy ((char *) hp->h_addr, (char *) &serveraddr.sin_addr, hp->h_length);
+    serveraddr.sin_port = htons(atoi(argv[1]));
+	serveraddr.sin_family = hp->h_addrtype;		
 
-
-	// -----------------------------------------------------------------------------------
-
-    // htons -> converte o numero da porta para o formato correto de rede (big-endian)
-
-	/* atribui o numero da porta (devidamente convertido para big endian) ao membro da 
-     * struct 'sockaddr_in' que representa o numero da porta  */
-    sa.sin_port = htons(atoi(argv[1]));
-
-    // hp->h_addr = 127.0.1.1 (localhost)
-    /* copia o end. IP que veio do dns para a estrutura socketaddr_in do socket sa*/
-	bcopy ((char *) hp->h_addr, (char *) &sa.sin_addr, hp->h_length);
-    
-    //sa.sin_family = AF_INET;
-	sa.sin_family = hp->h_addrtype;		
-
-    /* open server socket. returns a file descriptor for the socket. 
-    sock_desc = socket(AF_INET, transport, protocol)*/
-	if ((s = socket(hp->h_addrtype,SOCK_STREAM,0)) < 0){
-           puts ( "Nao consegui abrir o socket" );
+    /* open server socket. returns a file descriptor for the socket. */
+	if ((server_socket = socket(hp->h_addrtype,SOCK_STREAM,0)) < 0){
+        puts ( "Nao consegui abrir o socket" );
 		exit (1);
 	}	
+    puts("Socket do servidor criado com sucesso!");
 
     /* bind() associates a socket with an address */
-	if (bind(s, (struct sockaddr *) &sa, sizeof(sa)) < 0){
+	if (bind(server_socket, (struct sockaddr *) &serveraddr, sizeof(serveraddr)) < 0){
 		puts ( "Nao consegui fazer o bind" );
 		exit (1);
 	}		
-    dado = 0;
-    /* listen() prepares it for incoming connections. */
-	listen (s, TAMFILA);
+   puts("Bind feito com sucesso!");
 
-    
+    /* listen() prepares it for incoming connections. */
+	listen (server_socket, TAMFILA);
+    puts("Servidor aguardando conexao..");
+
 	while (1){
-		i = sizeof(sa);
+		serveraddrsize = sizeof(serveraddr);
         /* accept estabelece uma conexão solicitada pelo cliente*/
-		if ((t=accept(s, (struct sockaddr *) &isa,&i))<0){
+		if ((client_socket = accept(server_socket, (struct sockaddr *) &clientaddr,&serveraddrsize))<0){
             puts ( "Nao consegui estabelecer conexao" );
             exit (1);
 		}	
+        // Limpa o buffer
+        memset(buffer, 0, sizeof(buffer));
+        // verifica a requisicao do cliente
+        nread = read(client_socket, buffer, BUFSIZ);
+        buffer[nread + 1] = '\0';
+        printf("buf: %s\n", buffer);
 
-        read(t, buf, BUFSIZ);
         // Se a mensagem for do Cliente 1, envia o dado atual
-        if (strcmp(buf, "GET") == 0) {
-            sprintf(buf, "%d", dado);
+        if (strcmp(buffer, "GET") == 0) {
+            printf("entrou no if do get\n");
+            sprintf(buffer, "%d", dado);
             printf("Sou o servidor, tenho a mensagem----> %d\n", dado);
-            write(t,buf, BUFSIZ);
+            printf("buffer %s\n", buffer);
+            write(client_socket, buffer, BUFSIZ);
         }
 
         // Se a mensagem for do Cliente 2, modifica o dado
-        if (strcmp(buf, "SET") == 0) {
-            read(t, buf, BUFSIZ);
-            //sprintf(buf, "%d", dado);
-            dado = atoi(buf);
+        if (strcmp(buffer, "SET") == 0) {
+            printf("entrou no if do set\n");
+            nread = read(client_socket, buffer, BUFSIZ);
+            buffer[nread + 1] = '\0';
+            //sprintf(buffer, "%d", dado);
+            dado = atoi(buffer);
             printf("Dado modificado no servidor para: %d\n", dado);
         }
-        close(t);
+
+        fflush(stdout);
+        buffer[0] = '\0';
+        close(client_socket);
    }
+   
    exit(0);
 }

@@ -1,3 +1,9 @@
+/* 
+    Funcionalidade: Uma proxy TCP/IP 
+    Autor: Barbara Reis
+    Data da última modificação: 6/maio/2024 
+*/
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -10,7 +16,7 @@
 #define TAMFILA 5
 
 int main(int argc, char *argv[]) {
-    int proxy_socket, server_socket, client_socket, clientaddrsize;
+    int proxy_socket, server_socket, client_socket, proxyaddrsize, nread;
     struct sockaddr_in clientaddr, serveraddr, proxyaddr;
     struct hostent *hp_serv, *hp_proxy;
     char buf[BUFSIZ+1];
@@ -57,9 +63,9 @@ int main(int argc, char *argv[]) {
     serveraddr.sin_port = htons(atoi(argv[3]));
 
     while(1) {
-        clientaddrsize = sizeof(clientaddr);
+        proxyaddrsize = sizeof(proxyaddr);
 
-        if((client_socket = accept(proxy_socket, (struct sockaddr*)&clientaddr, &clientaddrsize)) < 0) {
+        if((client_socket = accept(proxy_socket, (struct sockaddr*)&clientaddr, &proxyaddrsize)) < 0) {
             puts("Nao consegui aceitar a conexao!");
             exit(1);
         }
@@ -74,17 +80,25 @@ int main(int argc, char *argv[]) {
             exit(1);
         }
 
-
-        write(server_socket,  "GET" , strlen("GET"));
-        int nread;
-        nread = read(server_socket, buf, BUFSIZ);
-        if(nread == -1) {
-            printf("Failure receiving data. Closing connection\n");
+        if(nread = read(client_socket, buf, BUFSIZ) < 0){
+            printf("Sou a proxy. Não consegui receber os dados do cliente 1. Fechando a conexão..\n");
             close(client_socket);
             close(server_socket);
             exit(1);
         }
-        buf[nread] = '\0';
+
+        
+
+        write(server_socket,  "GET" , strlen("GET"));
+        
+        if(nread = read(server_socket, buf, BUFSIZ) < 0){
+            printf("Não consegui receber os dados. Fechando a conexão..\n");
+            close(client_socket);
+            close(server_socket);
+            exit(1);
+        }
+        
+        //printf("buf: %s\n", buf);
         printf("Sou a proxy, recebi do servidor a mensagem: %d\n", atoi(buf));
         write(client_socket, buf, strlen(buf));
 

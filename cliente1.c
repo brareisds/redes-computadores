@@ -1,53 +1,41 @@
 /* 
-    Funcionalidade: Um cliente TCP/IP 
+    Funcionalidade: Um cliente-proxy TCP/IP 
     Autor: Barbara Reis
-    Data da última modificação: 29/abril/2024 
-    Cliente: Programa que o usuario inicializa 
+    Data da última modificação: 6/maio/2024 
 */
 
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
-#include <netinet/in.h> /* biblioteca socket eh generica -> nao so pra tcpip. Os itens da internet em especifico estao nessa lib*/
-#include <netdb.h> /* Biblioteca para usar o DNS */
+#include <netinet/in.h> 
+#include <netdb.h> 
 #include <stdlib.h>
 #include <string.h>
 
-/* argc: numero de argumentos da linha de comando*/
 int main(int argc, char *argv[]){
-    int sock_descr; /* pid do socket */
-    int numbytesrecv; /* numero bytes recebidos */
-    struct sockaddr_in sock_enderec; /* struct imbutida do tipo sockaddr_in*/
-    struct hostent *hp; /* estrutura imbutida para poder usar o DNS -> retorna o end. IP dado o nome etc dentro da struct*/
-    char buf[BUFSIZ+1]; /*BUFSIZ const do sistema recomendada para o sistema*/
-    char *host; /* onde o servidor esta rodadndo*/
-    char *dados; /*que serao transmitos*/
+    int sock_descr, nread; 
+    struct sockaddr_in proxyaddr;
+    struct hostent *hp; 
+    char buffer[BUFSIZ + 1];
+    char *host;
+    char *dados;
 
     if(argc != 3){
-        /* ./cli babs-pc 1500 oioi */
         puts("Uso correto: cliente <nome-proxy> <porta>");
         exit(1);
     }
 
     host = argv [1];
-    //dados = argv[3];
 
-    /*Chama o DNS para resolver o nome. Retorna dentro do HP as informacoes*/
     if((hp = gethostbyname(host)) == NULL){
         puts("O DNS não retornou o endereço IP da proxy!");
         exit(1);
     }
 
-    printf("Host name: %s\n", hp->h_name);
-    
-    /* copiar o end IP para o socket do cliente */
-    bcopy((char *)hp->h_addr, (char*)&sock_enderec.sin_addr, hp->h_length);
-
-    /* Fala que esta falando da familia dos endereccos da internet TCP/IP*/
-    sock_enderec.sin_family = AF_INET;
-    /* Processadores da intel sao littleEndian entao percisa converter para BigEndian usando a funcao htons. Converte a porta para interio*/
-    sock_enderec.sin_port = htons(atoi(argv[2])); /* Precisa converter somente a porta */
+    bcopy((char *)hp->h_addr, (char*)&proxyaddr.sin_addr, hp->h_length);
+    proxyaddr.sin_family = AF_INET;
+    proxyaddr.sin_port = htons(atoi(argv[2])); 
 
     /* Abre o socket */
     if((sock_descr = socket(AF_INET,SOCK_STREAM,0)) < 0){
@@ -55,34 +43,32 @@ int main(int argc, char *argv[]){
         exit(1);
     }
 
-    /* A partir daqui o socket esta aberto */
-
-    /* Cliente especifica endereço do servidor */
     /* connect() is used on the client side, and assigns a free local port number to a socket */
-    if(connect(sock_descr,(struct sockaddr*)&sock_enderec,sizeof(sock_enderec)) < 0){
+    if(connect(sock_descr,(struct sockaddr*)&proxyaddr,sizeof(proxyaddr)) < 0){
         puts("Não consegui conectar com a proxy!");
         exit(1);
     }
-    printf("sock_descr: %d\n", sock_descr);
-    //printf("CLI1 (struct sockaddr*)&sock_enderec %d\n", (struct sockaddr*)&sock_enderec);
-
+    
     /* Transmissao dos dados */
     printf("Cliente 1 solicitando dado...\n");
     if(write(sock_descr,  "GET" , strlen("GET")) != strlen("GET")){
-        puts("Não consegui fazer a transmissao");
+        puts("Não consegui fazer a solicitacao. Fechando a conexao..");
+        close(sock_descr);
         exit(1);
     }
 
     /* Recebe os dados. Comando que bloqueia */
-    int nread;
-    nread = read(sock_descr,buf,BUFSIZ);
-    //buf[nread] = '\0';
-    printf("Sou o cliente 1, recebi da proxy o dado: ---> %d\n",atoi(buf));
-    //printf("bufsiz: %d\n", BUFSIZ);
+    if(nread = read(sock_descr,buffer,BUFSIZ) < 0){
+        printf("Sou o cliente 1 -> Não consegui receber os dados da proxy. Fechando a conexão..\n");
+        close(sock_descr);
+        exit(1);
+    }
+    //buffer[nread] = '\0';
+    printf("Sou o cliente 1, recebi da proxy o dado: ---> %d\n",atoi(buffer));
+    //printf(": %d\n", );
     fflush(stdout);
-    buf[0] = '\0';
-    /* limpar lixo do buffer */
-    
+    buffer[0] = '\0';
+    /* limpar lixo do bufferfer */
 
     close(sock_descr);
     exit(0);
