@@ -49,10 +49,11 @@ int main(int argc, char *argv[]){
         exit(1);
     }
     
+    memset(buffer, 0, sizeof(buffer));
     /* Transmissao dos dados */
-    printf("Cliente 1 solicitando dado...\n");
+    printf("Cliente 1 consultando dado...\n");
     if(write(sock_descr,  "GET" , strlen("GET")) != strlen("GET")){
-        puts("Não consegui fazer a solicitacao. Fechando a conexao..");
+        puts("Sou o cliente 1. Não consegui fazer a consulta. Fechando a conexao..");
         close(sock_descr);
         exit(1);
     }

@@ -80,6 +80,8 @@ int main(int argc, char *argv[]) {
             exit(1);
         }
 
+        memset(buf, 0, sizeof(buf));
+
         if(nread = read(client_socket, buf, BUFSIZ) < 0){
             printf("Sou a proxy. Não consegui receber os dados do cliente 1. Fechando a conexão..\n");
             close(client_socket);

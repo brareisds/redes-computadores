@@ -71,11 +71,12 @@ int main (int argc, char *argv[]) {
         memset(buffer, 0, sizeof(buffer));
         // verifica a requisicao do cliente
         nread = read(client_socket, buffer, BUFSIZ);
-        buffer[nread + 1] = '\0';
+        //buffer[nread + 1] = '\0';
         printf("buf: %s\n", buffer);
 
         // Se a mensagem for do Cliente 1, envia o dado atual
         if (strcmp(buffer, "GET") == 0) {
+            memset(buffer, 0, sizeof(buffer));
             printf("entrou no if do get\n");
             sprintf(buffer, "%d", dado);
             printf("Sou o servidor, tenho a mensagem----> %d\n", dado);
@@ -86,15 +87,16 @@ int main (int argc, char *argv[]) {
         // Se a mensagem for do Cliente 2, modifica o dado
         if (strcmp(buffer, "SET") == 0) {
             printf("entrou no if do set\n");
+            memset(buffer, 0, sizeof(buffer));
             nread = read(client_socket, buffer, BUFSIZ);
-            buffer[nread + 1] = '\0';
+            //buffer[nread + 1] = '\0';
             //sprintf(buffer, "%d", dado);
             dado = atoi(buffer);
             printf("Dado modificado no servidor para: %d\n", dado);
         }
 
         fflush(stdout);
-        buffer[0] = '\0';
+        //buffer[0] = '\0';
         close(client_socket);
    }
    

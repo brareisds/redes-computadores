@@ -14,6 +14,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define QNT_MODIFICACOES 10
+
 
 int main(int argc, char *argv[]){
     int sock_descr; 
@@ -73,5 +75,7 @@ int main(int argc, char *argv[]){
     close(sock_descr);
     exit(0);
 }
+
+
 
 
