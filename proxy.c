@@ -1,7 +1,7 @@
 /* 
     Funcionalidade: Uma proxy TCP/IP 
     Autor: Barbara Reis
-    Data da última modificação: 9/maio/2024 
+    Data da última modificação: 11/maio/2024 
 */
 
 #include <stdio.h>
@@ -13,13 +13,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "log_functions.h"
+
 #define TAMFILA 5
 
 int main(int argc, char *argv[]) {
-    int proxy_socket, server_socket, client_socket, proxyaddrsize, nread;
+    int proxy_socket, server_socket, client_socket, nread;
     struct sockaddr_in clientaddr, serveraddr, proxyaddr;
     struct hostent *hp_serv, *hp_proxy;
     char buf[BUFSIZ+1], *host, requisicao[BUFSIZ+1];
+    socklen_t proxyaddrsize;
 
     if(argc != 4) {
         puts("Uso correto: proxy <nome-servidor> <porta-servidor> <porta-proxy>");
@@ -27,11 +30,6 @@ int main(int argc, char *argv[]) {
     }
 
     host = argv[1];
-    FILE *log_file = fopen("log.txt", "w");
-    if (log_file == NULL) {
-        perror("Erro ao abrir o arquivo de log");
-        exit(1);
-    }
 
     /* chama o resolvedor DNS. Retorna uma struct contendo o end. IP do host do servidor */
     if((hp_serv = gethostbyname(host)) == NULL) {
@@ -72,7 +70,8 @@ int main(int argc, char *argv[]) {
         puts("Erro ao escutar conexoes na proxy!\n");
         exit(1);
     }
-    printf("Proxy aguardando conexao..\n");
+
+    saveLog("Proxy: Aguardando conexao...\n\n");
 
     
 
@@ -81,33 +80,36 @@ int main(int argc, char *argv[]) {
 
         /* estabelece uma conexão entre o Cliente 1 e a proxy */
         if((client_socket = accept(proxy_socket, (struct sockaddr*)&clientaddr, &proxyaddrsize)) < 0) {
-            puts("Nao consegui aceitar a conexao!\n");
+            puts("Proxy nao conseguiu aceitar a conexao!\n");
             exit(1);
         }
+        saveLog("Proxy: Conexao estabelecida com o Cliente 1\n");
 
         /* abre o socket que ira se comunicar com o servidor */
         if((server_socket = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-            puts("Não consegui abrir o socket do servidor\n");
+            puts("Proxy nao consegui abrir o socket do servidor\n");
             exit(1);
         }
 
         /* conecta o socket do servidor ao endereco do mesmo. Estabele uma conexao entre a proxy e o servidor */
         if(connect(server_socket, (struct sockaddr*)&serveraddr, sizeof(serveraddr)) < 0) {
-            puts("Não consegui conectar com o servidor!\n");
+            puts("Proxy nao conseguiu conectar com o servidor!\n");
             exit(1);
         }
-
+        
         /* limpa o buffer */
         memset(buf, 0, sizeof(buf));
 
         /* recebe a requisicao do Cliente 1. Nesse caso do tipo GET */
-        if(nread = read(client_socket, buf, BUFSIZ) < 0){
+        if((nread = read(client_socket, buf, BUFSIZ)) < 0){
             puts("Proxy nao conseguiu receber a requisicao do cliente 1. Fechando a conexão..\n");
             close(client_socket);
             close(server_socket);
             exit(1);
         }
         strcpy(requisicao, buf);
+
+        saveLog("Proxy: Enviando para o servidor a requisicao do Cliente 1\n");
 
         /* transmite a requisicao feita pelo cliente para o servidor */
         if(write(server_socket, requisicao , strlen(requisicao)) != strlen(requisicao)){
@@ -121,14 +123,15 @@ int main(int argc, char *argv[]) {
         memset(buf, 0, sizeof(buf));
 
         /* recebe os dados transmitidos pelo servidor */
-        if(nread = read(server_socket, buf, BUFSIZ) < 0){
+        if((nread = read(server_socket, buf, BUFSIZ)) < 0){
             puts("Proxy nao conseguiu receber os dados do servidor. Fechando a conexão..\n");
             close(client_socket);
             close(server_socket);
             exit(1);
         }
         
-        printf("\nProxy recebeu do servidor o dado---> %d\n", atoi(buf));
+        saveLog_with_data("Proxy: Recebeu do servidor o dado---> %d\n", atoi(buf));
+        saveLog_with_data("Proxy: Enviando para o Cliente 1 o dado---> %d\n", atoi(buf));
         
         /* transmite os dados recebidos pelo servidor para o Cliente 1 */
         if(write(client_socket, buf, strlen(buf)) != strlen(buf)){
@@ -137,8 +140,6 @@ int main(int argc, char *argv[]) {
             close(server_socket);
             exit(1);
         }
-
-        printf("Proxy enviando para o cliente 1 o dado---> %d\n", atoi(buf));
 
         close(client_socket);
         close(server_socket);
