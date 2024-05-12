@@ -1,3 +1,9 @@
+/* 
+    Funcionalidade: Salvar o log do sistema cliente-servidor TCP/IP
+    Autor: Barbara Reis
+    Data da última modificação: 11/maio/2024 
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

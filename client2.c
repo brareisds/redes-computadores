@@ -57,7 +57,8 @@ int main(int argc, char *argv[]){
     /* formata a mensagem que sera enviada para o servidor com a requisicao (SET) e com o novo valor do dado */
     sprintf(mensagem, "SET %s", dados);
 
-    saveLog_with_data("Cliente 2: Modificando o dado do servidor para --> %d\n\n", atoi(dados));
+    saveLog_with_data("Cliente 2: Modificando o dado do servidor para --> %d\n", atoi(dados));
+    printf("\n");
 
     /* transmite a mensagem para o servidor e verifica o sucesso da msg */
     if(write(sock_descr, mensagem, strlen(mensagem)) != strlen(mensagem)){

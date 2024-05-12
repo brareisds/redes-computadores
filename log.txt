@@ -1,0 +1,36 @@
+===================================================================================
+
+Logs do programa que implementa um sistema cliente-servidor TCP/IP utilizando proxy
+
+Barbara Reis - Trabalho pratico da disciplina Redes de computadores CI1244
+
+===================================================================================
+
+2024-05-11 23:16:54 Servidor: Inicializado com o dado: 0
+2024-05-11 23:16:54 Servidor: Aguardando conexao...
+2024-05-11 23:16:59 Proxy: Aguardando conexao...
+
+2024-05-11 23:17:04 Cliente 1: Consultando dado...
+2024-05-11 23:17:04 Proxy: Conexao estabelecida com o Cliente 1
+2024-05-11 23:17:04 Proxy: Enviando para o servidor a requisicao do Cliente 1
+2024-05-11 23:17:04 Servidor: Conexao estabelecida com a proxy
+2024-05-11 23:17:04 Servidor: Transmitindo o dado ----> 0
+2024-05-11 23:17:04 Servidor: Dado enviado para a proxy.
+2024-05-11 23:17:04 Proxy: Recebeu do servidor o dado---> 0
+2024-05-11 23:17:04 Proxy: Enviando para o Cliente 1 o dado---> 0
+2024-05-11 23:17:04 Cliente 1: Recebeu da proxy o dado---> 0
+
+2024-05-11 23:17:08 Cliente 2: Modificando o dado do servidor para --> 1
+2024-05-11 23:17:08 Servidor: Conexao estabelecida com o Cliente 2
+2024-05-11 23:17:08 Servidor: Dado do servidor modificado para ----> 1
+
+2024-05-11 23:17:10 Cliente 1: Consultando dado...
+2024-05-11 23:17:10 Proxy: Conexao estabelecida com o Cliente 1
+2024-05-11 23:17:10 Proxy: Enviando para o servidor a requisicao do Cliente 1
+2024-05-11 23:17:10 Servidor: Conexao estabelecida com a proxy
+2024-05-11 23:17:10 Servidor: Transmitindo o dado ----> 1
+2024-05-11 23:17:10 Servidor: Dado enviado para a proxy.
+2024-05-11 23:17:10 Proxy: Recebeu do servidor o dado---> 1
+2024-05-11 23:17:10 Proxy: Enviando para o Cliente 1 o dado---> 1
+2024-05-11 23:17:10 Cliente 1: Recebeu da proxy o dado---> 1
+
