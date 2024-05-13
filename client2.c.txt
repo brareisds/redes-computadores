@@ -20,7 +20,7 @@ int eh_inteiro(const char *dado) {
     char *endptr;
     strtol(dado, &endptr, 10);
 
-    // Se o ponteiro de término for o fim da string, é numérico.
+    // Se o ponteiro de término for o fim da string, eh inteiro.
     if (*endptr == '\0') {
         return 1;
     }
@@ -36,7 +36,7 @@ int main(int argc, char *argv[]){
     char mensagem[BUFSIZ + 1];
 
     if(argc != 4){
-        puts("Uso correto: cliente <nome-servidor> <porta-servidor> <dado-inteiro>");
+        puts("Uso correto: client2 <nome-servidor> <porta-servidor> <dado-inteiro>");
         exit(1);
     }
 

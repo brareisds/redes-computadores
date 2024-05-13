@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+    <title>Relatório - Trabalho Prático Redes de Computadores 2024-1</title>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa; /* Fundo mais suave */
+            color: #333;
+            display: flex;
+        }
+
+        .container {
+            max-width: 800px; /* Reduz a largura máxima para melhor legibilidade */
+            margin: 20px auto; /* Centraliza o conteúdo na página */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 30px; /* Borda mais suave */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            flex: 1; 
+        }
+
+        aside {
+            width: 250px;
+            padding: 20px;
+            background-color: #444;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #fff;
+        }
+
+        aside a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s; /* Adiciona transição suave para a cor do link */
+        }
+
+        aside a:hover {
+            color: #ccc; /* Muda a cor ao passar o mouse sobre o link */
+        }
+
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        h1 {
+            font-size: 24px; /* Tamanho maior para o título principal */
+            margin-bottom: 20px; /* Adiciona espaço abaixo do título principal */
+        }
+
+        h2 {
+            font-size: 20px; /* Tamanho maior para os títulos secundários */
+            padding: 5px 0;
+            border-bottom: 1px solid #ccc;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 8px;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-left: 5px solid #ccc;
+            margin: 0;
+        }
+
+        code {
+            font-family: monospace;
+            padding-left: 1px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <aside>
+        <h3 style="margin-bottom: 10px; font-size: 1.2em; font-weight: bold;">Códigos</h3>
+        <ul>
+            <li><a href="proxy.c.txt">proxy.c.txt</a></li>
+            <li><a href="client1.c.txt">client1.c.txt</a></li>
+            <li><a href="server.c.txt">server.c.txt</a></li>
+            <li><a href="client2.c.txt">client2.c.txt</a></li>
+            <li><a href="log_functions.c.txt">log_functions.c.txt</a></li>
+            <li><a href="log_functions.h.txt">log_functions.h.txt</a></li>
+            <li><a href="makefile.txt">makefile.txt</a></li>
+            <li><a href="log.txt">log.txt</a></li>
+        </ul>
+        <h3 style="margin-top: 20px; margin-bottom: 10px; font-size: 1.2em; font-weight: bold;">Seções</h3>
+        <ul>
+            <li><a href="#introducao">Introdução</a></li>
+            <li><a href="#implementacao">Implementação</a></li>
+            <li><a href="#uso">Forma de uso</a></li>
+            <li><a href="#proxy">Proxy</a></li>
+            <li><a href="#servidor">Servidor</a></li>
+            <li><a href="#clientes">Clientes</a></li>
+            <li><a href="#logs">Detalhes do Log</a></li>
+            <li><a href="#resultados">Resultados</a></li>
+            <li><a href="#conclusao">Conclusão</a></li>
+        </ul>
+        <a href="https://github.com/brareisds/redes-computadores.git" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+            <i class="fab fa-github"></i> Repositório do Projeto
+        </a>
+    </aside>
+    
+
+
+    <div class="container">
+        <h1>Relatório - Trabalho Prático Redes de Computadores 2024-1</h1>
+        <p>Autora: Barbara Reis dos Santos</p>
+
+        <h2 id="introducao">Introdução</h2>
+        <p>O objetivo deste trabalho foi desenvolver uma aplicação cliente-servidor utilizando uma proxy como intermediária. A proxy atua como uma entidade intermediária entre o cliente e o servidor, direcionando as requisições e respostas entre os dois.</p>
+
+        <h2 id="implementacao">Implementação</h2>
+        <p>A implementação do sistema cliente-servidor TCP/IP foi feita em linguagem C, utilizando sockets para comunicação entre os diferentes componentes. O sistema é composto por quatro programas principais: a Proxy, o Cliente 1, o Servidor e o Cliente 2, cada um desempenhando um papel específico no fluxo de comunicação. Além disso, foi criado um arquivo log_functions.c que contém funções para salvar logs das operações realizadas pelos programas e um makefile encarregado de compilar esses arquivos para gerar os executáveis.</p>
+
+        <h2 id="requisitos">Arquivos necessários para executar o sistema:</h2>
+        <ul>
+            <li><a href="proxy.c.txt">proxy.c</a>: Implementação da proxy TCP/IP.</li>
+            <li><a href="client1.c.txt">client1.c</a>: Implementação do Cliente 1 que consulta a proxy.</li>
+            <li><a href="server.c.txt">server.c</a>: Implementação do Servidor que mantém o dado.</li>
+            <li><a href="client2.c.txt">client2.c</a>: Implementação do Cliente 2 que modifica o dado no servidor.</li>
+            <li><a href="log_functions.c.txt">log_functions.c</a>: Implementação das funções de log.</li>
+            <li><a href="log_functions.h.txt">log_functions.h</a>: Declaração das funções de log.</li>
+        </ul>
+
+        <h2 id="uso">Forma de uso:</h2>
+        <pre><p><code>make</code></p><p><code>./server 12345</code></p><p><code>./proxy localhost 12345 54321</code></p><p><code>./client1 localhost 54321</code></p><p><code>./client2 localhost 12345 42</code></p></pre>
+
+        <h3>Servidor (server.c):</h3>
+        <p>O servidor deve ser executado com um argumento na linha de comando: a porta em que o servidor irá escutar (server porta-serv).
+        Exemplo de uso: <pre><code>./server 12345</code></pre></p>
+
+
+        <h3>Proxy (proxy.c):</h3>
+        <p>O programa proxy deve ser executado com três argumentos na linha de comando: o nome do servidor, a porta do servidor e a porta da proxy (proxy nome-servidor porta-servidor porta-proxy").
+        Exemplo de uso: <pre><code>./proxy localhost 12345 54321</code></pre></p>
+
+        <h3>Cliente 1 (client1.c):</h3>
+        <p>O cliente 1 deve ser executado com dois argumentos na linha de comando: o nome da proxy e a porta da proxy (client1 nome-proxy porta-proxy).
+        Exemplo de uso: <pre><code>./client1 localhost 54321</code></pre></p>
+
+
+        <h3>Cliente 2 (client2.c):</h3>
+        <p>O cliente 2 deve ser executado com três argumentos na linha de comando: o nome do servidor, a porta do servidor e o novo valor do dado a ser enviado para o servidor (client2 nome-servidor porta-servidor dado-inteiro).
+        Exemplo de uso: <pre><code>./client2 localhost 12345 42</code></pre></p>
+
+        
+
+
+
+        <h2 id="proxy">Proxy</h2>
+        <p>A implementação da proxy consiste em um programa que aguarda conexões de clientes, especificamente do Cliente 1. Quando o Cliente 1 se conecta, a proxy estabelece uma conexão com o servidor e repassa as mensagens entre o Cliente 1 e o servidor. A proxy suporta requisições do tipo GET, permitindo ao Cliente 1 obter o dado atual do servidor.</p>
+
+        <h3>Detalhes da Implementação</h3>
+        <p>A implementação da proxy envolve os seguintes passos:</p>
+        <ol>
+            <li>Preparação do Socket da Proxy:</li>
+            <ul>
+                <li>É aberto um socket da proxy usando a função <code>socket(AF_INET, SOCK_STREAM, 0)</code>.</li>
+                <li>O socket é associado à porta da proxy usando a função <code>bind(proxy_socket, (struct sockaddr*)&proxyaddr, sizeof(proxyaddr))</code>.</li>
+                <li>A proxy é preparada para receber conexões usando a função <code>listen(proxy_socket, TAMFILA)</code>.</li>
+            </ul>
+            <li>Aguardando Conexões:</li>
+            <ul>
+                <li>A proxy entra em um loop infinito esperando por conexões do cliente 1 usando a função <code>accept(proxy_socket, (struct sockaddr*)&clientaddr, &proxyaddrsize)</code>.</li>
+            </ul>
+            <li>Estabelecimento de Conexão com o Servidor:</li>
+            <ul>
+                <li>Um socket é aberto para se comunicar com o servidor usando a função <code>socket(AF_INET, SOCK_STREAM, 0)</code>.</li>
+                <li>O socket é conectado ao endereço IP e porta do servidor usando a função <code>connect(server_socket, (struct sockaddr*)&serveraddr, sizeof(serveraddr))</code>.</li>
+            </ul>
+            <li>Transferência de Dados:</li>
+            <ul>
+                <li>A proxy recebe a requisição do cliente usando a função <code>read(client_socket, buf, BUFSIZ)</code>.</li>
+                <li>A requisição é enviada ao servidor usando a função <code>write(server_socket, requisicao, strlen(requisicao))</code>.</li>
+                <li>A resposta do servidor é recebida usando a função <code>read(server_socket, buf, BUFSIZ)</code>.</li>
+                <li>A resposta é enviada de volta ao cliente usando a função <code>write(client_socket, buf, strlen(buf))</code>.</li>
+            </ul>
+            <li>Encerramento das Conexões:</li>
+            <ul>
+                <li>As conexões com o cliente e o servidor são encerradas usando a função <code>close(client_socket)</code> e <code>close(server_socket)</code>.</li>
+            </ul>
+        </ol>
+
+        <h2 id="servidor">Servidor</h2>
+        <p>O servidor mantém uma variável inteira que pode ser consultada e modificada pelos clientes. Ele recebe requisições do cliente 2 (SET) para modificar o valor da variável e requisições do cliente 1 (GET) para obter o valor atual da variável.</p>
+
+        <h3>Detalhes da Implementação</h3>
+        <p>A implementação do servidor envolve os seguintes passos:</p>
+        <ol>
+            <li>Preparação do Socket do Servidor:</li>
+            <ul>
+                <li>É aberto um socket do servidor usando a função <code>socket(AF_INET, SOCK_STREAM, 0)</code>.</li>
+                <li>O socket é associado à porta do servidor usando a função <code>bind(server_socket, (struct sockaddr*)&serveraddr, sizeof(serveraddr))</code>.</li>
+                <li>O servidor é preparado para receber conexões usando a função <code>listen(server_socket, TAMFILA)</code>.</li>
+            </ul>
+            <li>Aguardando Conexões:</li>
+            <ul>
+                <li>O servidor entra em um loop infinito esperando por conexões de clientes usando a função <code>accept(server_socket, (struct sockaddr*)&clientaddr, &serveraddrsize)</code>.</li>
+            </ul>
+            <li>Recebendo Requisições dos Clientes:</li>
+            <ul>
+                <li>O servidor recebe a requisição do cliente usando a função <code>read(client_socket, buf, BUFSIZ)</code>.</li>
+            </ul>
+            <li>Processamento da Requisição:</li>
+            <ul>
+                <li>O servidor processa a requisição do cliente conforme a lógica específica da aplicação.</li>
+            </ul>
+            <li>Enviando Resposta aos Clientes:</li>
+            <ul>
+                <li>O servidor envia a resposta ao cliente usando a função <code>write(client_socket, resposta, strlen(resposta))</code>.</li>
+            </ul>
+            <li>Encerramento da Conexão:</li>
+            <ul>
+                <li>A conexão com o cliente é encerrada usando a função <code>close(client_socket)</code>.</li>
+            </ul>
+            <li>Encerramento do Servidor:</li>
+            <ul>
+                <li>O servidor pode ser encerrado caso necessário.</li>
+            </ul>
+        </ol>
+
+        <h2 id="clientes">Clientes</h2>
+        <p>Foram implementados dois clientes. O Cliente 1 se conecta à proxy e envia uma requisição GET para obter o dado atual do servidor. O Cliente 2 se conecta diretamente ao servidor e envia uma requisição SET para modificar o dado no servidor.</p>
+
+        <h3>Detalhes da Implementação</h3>
+
+        <h3 id="client1">Cliente 1:</h3>
+        <p>A implementação do cliente-proxy envolve os seguintes passos:</p>
+        <ol>
+            <li>Resolução do Nome da Proxy:</li>
+            <ul>
+                <li>É chamado o resolvedor DNS para obter o endereço IP da proxy usando a função <code>gethostbyname(host)</code>.</li>
+            </ul>
+            <li>Preparação da Estrutura da Proxy:</li>
+            <ul>
+                <li>O endereço IP e a porta da proxy são configurados na estrutura proxyaddr.</li>
+            </ul>
+            <li>Abertura do Socket do Cliente:</li>
+            <ul>
+                <li>É aberto um socket do cliente usando a função <code>socket(AF_INET, SOCK_STREAM, 0)</code>.</li>
+            </ul>
+            <li>Conexão com a Proxy:</li>
+            <ul>
+                <li>O cliente-proxy se conecta à proxy usando a função <code>connect(sock_descr, (struct sockaddr*)&proxyaddr, sizeof(proxyaddr))</code>.</li>
+            </ul>
+            <li>Envio da Requisição GET:</li>
+            <ul>
+                <li>Uma mensagem de requisição é enviada à proxy usando a função <code>write(sock_descr, "GET", strlen("GET"))</code>.</li>
+            </ul>
+            <li>Recebimento da Resposta:</li>
+            <ul>
+                <li>A resposta da proxy é recebida pelo cliente-proxy usando a função <code>read(sock_descr, buffer, BUFSIZ)</code>.</li>
+            </ul>
+            <li>Encerramento da Conexão:</li>
+            <ul>
+                <li>A conexão com a proxy é encerrada usando a função <code>close(sock_descr)</code>.</li>
+            </ul>
+        </ol>
+
+        <h3 id="client2">Cliente 2:</h3>
+        <p>A implementação do cliente-servidor envolve os seguintes passos:</p>
+        <ol>
+            <li>Validação do Dado Inteiro:</li>
+            <ul>
+                <li>É verificado se o terceiro argumento fornecido é um número inteiro válido. Caso o argumento fornecido seja inválido, o programa é encerrado e nada é feito.</li>
+            </ul>
+            <li>Resolução do Nome do Servidor:</li>
+            <ul>
+                <li>É chamado o resolvedor DNS para obter o endereço IP do servidor.</li>
+            </ul>
+            <li>Preparação da Estrutura do Servidor:</li>
+            <ul>
+                <li>O endereço IP e a porta do servidor são configurados na estrutura serveraddr.</li>
+            </ul>
+            <li>Conexão com o Servidor:</li>
+            <ul>
+                <li>O cliente-servidor se conecta ao servidor usando a função <code>connect(sock_descr, (struct sockaddr*)&serveraddr, sizeof(serveraddr))</code>.</li>
+            </ul>
+            <li>Envio da Requisição:</li>
+            <ul>
+                <li>Uma mensagem de requisição para modificar o dado é enviada ao servidor usando a função <code>write(sock_descr, mensagem, strlen(mensagem))</code>.</li>
+            </ul>
+            <li>Encerramento da Conexão:</li>
+            <ul>
+                <li>A conexão com o servidor é encerrada usando a função <code>close(sock_descr)</code>.</li>
+            </ul>
+        </ol>
+
+        <h2 id="logs">Detalhes do Log:</h2>
+        <p>O <a href="log.txt">log</a> gerado durante os testes segue o seguinte formato:</p>
+        <pre><p><code>2024-05-11 23:53:08 Cliente 1: Consultando dado...</code></p><p><code>2024-05-11 23:53:08 Proxy: Conexao estabelecida com o Cliente 1</code></p><p><code>2024-05-11 23:53:08 Proxy: Enviando para o servidor a requisicao do Cliente 1</code></p><p><code>2024-05-11 23:53:08 Servidor: Conexao estabelecida com a proxy</code></p><p><code>2024-05-11 23:53:08 Servidor: Transmitindo o dado ----&gt; 0</code></p><p><code>2024-05-11 23:53:08 Servidor: Dado enviado para a proxy.</code></p><p><code>2024-05-11 23:53:08 Proxy: Recebeu do servidor o dado--&gt; 0</code></p><p><code>2024-05-11 23:53:08 Proxy: Enviando para o Cliente 1 o dado--&gt; 0</code></p><p><code>2024-05-11 23:53:08 Cliente 1: Recebeu da proxy o dado--&gt; 0</code></p>
+            <p><code>2024-05-11 23:53:17 Cliente 2: Modificando o dado do servidor para --&gt; 10</code></p><p><code>2024-05-11 23:53:17 Servidor: Conexao estabelecida com o Cliente 2</code></p><p><code>2024-05-11 23:53:17 Servidor: Dado do servidor modificado para --&gt; 10</code></p><p><code>...</code></pre>
+        <p>O espaço entre as linhas separa as conexões feitas pelo Cliente 1 e feitas pelo Cliente 2 e no arquivo de <a href="log.txt">log</a> gerado foram feitas 4 consultas utilizando o Cliente 1 e 3 modificações utilizando o Cliente 2.</p>
+        <p>Obs: Novos registros de log são adicionados ao arquivo log.txt existente. Para garantir que os registros de log sejam precisos e relevantes para a execução atual, é recomendável apagar o arquivo de log antes de cada nova execução. Isso garante que o arquivo de log contenha apenas informações da execução atual, facilitando a análise e a depuração de problemas</p>  
+        
+        <h2 id="resultados">Resultados</h2>
+        <p>O sistema foi capaz de realizar as operações esperadas, permitindo que o Cliente 1 consulte o dado atual do servidor e o Cliente 2 modifique o dado no servidor. A comunicação entre os componentes ocorreu sem problemas, e os testes foram bem-sucedidos.</p>
+
+        <h2 id="conclusao">Conclusão</h2>
+        <p>O desenvolvimento deste sistema cliente-servidor com proxy proporcionou uma experiência prática na implementação de comunicação em rede. A utilização da proxy como intermediária mostrou-se eficiente para direcionar as requisições entre cliente e servidor.</p>
+    </div>
+
+    
+
+</body>
+</body>
+</html>

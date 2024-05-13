@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
     char *host;
 
     if(argc != 3){
-        puts("Uso correto: cliente <nome-proxy> <porta-proxy>");
+        puts("Uso correto: client1 <nome-proxy> <porta-proxy>");
         exit(1);
     }
 
@@ -45,7 +45,9 @@ int main(int argc, char *argv[]){
         puts("Não consegui abrir o socket da proxy\n"); 
         exit(1);
     }
+
     saveLog("Cliente 1: Consultando dado...\n");
+
     /* conecta o socket aberto ao endereco da proxy */
     if(connect(sock_descr,(struct sockaddr*)&proxyaddr,sizeof(proxyaddr)) < 0){
         puts("Não consegui conectar com a proxy!\n");

@@ -18,15 +18,24 @@
 #define TAMFILA      5
 #define MAXHOSTNAME 30
 
-void print_header(const char *message){
+void print_header(){
     FILE *log_file = fopen("log.txt", "a"); // Abre o arquivo de log em modo de adição
+
     if (log_file == NULL) {
         perror("Erro ao abrir o arquivo de log do servidor.");
         exit(1);
     }
 
-    fprintf(log_file, "%s\n", message); // Escreve a mensagem no arquivo de log
-    printf("%s\n", message); // Imprime a mensagem no console
+    fprintf(log_file,"===================================================================================\n\n"); 
+    fprintf(log_file,"Logs do programa que implementa um sistema cliente-servidor TCP/IP utilizando proxy\n\n");
+    fprintf(log_file,"Barbara Reis - Trabalho pratico da disciplina Redes de computadores CI1244\n\n");
+    fprintf(log_file,"===================================================================================\n"); 
+
+    printf("===================================================================================\n"); 
+    printf("Logs do programa que implementa um servidor TCP/IP utilizando proxy\n");
+    printf("Barbara Reis - Trabalho pratico da disciplina Redes de computadores CI1244\n");
+    printf("===================================================================================\n"); 
+
     fclose(log_file); // Fecha o arquivo de log
 }
 
@@ -39,14 +48,11 @@ int main (int argc, char *argv[]) {
     socklen_t serveraddrsize;
     int dado = 0; // inicializa o dado no servidor com o valor 0
 
+    print_header();
+
     /* system call que retorna o hostname na string localhost */
     gethostname (localhost, MAXHOSTNAME);
     
-    print_header("===================================================================================\n"); 
-    print_header("Logs do programa que implementa um sistema cliente-servidor TCP/IP utilizando proxy\n");
-    print_header("Barbara Reis - Trabalho pratico da disciplina Redes de computadores CI1244\n");
-    print_header("===================================================================================\n"); 
-
     if (argc != 2) {
         puts("Uso correto: servidor <porta-serv>");
         exit(1);
@@ -84,7 +90,6 @@ int main (int argc, char *argv[]) {
     saveLog_with_data("Servidor: Inicializado com o dado: %d\n", dado);
     saveLog("Servidor: Aguardando conexao...\n");
    
-
 	while (1){
 		serveraddrsize = sizeof(serveraddr);
 
