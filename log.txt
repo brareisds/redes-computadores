@@ -1,60 +1,62 @@
 ===================================================================================
+
 Logs do programa que implementa um sistema cliente-servidor TCP/IP utilizando proxy
+
 Barbara Reis - Trabalho pratico da disciplina Redes de computadores CI1244
+
 ===================================================================================
-2024-05-12 20:45:03 Servidor: Inicializado com o dado: 0
-2024-05-12 20:45:03 Servidor: Aguardando conexao...
-2024-05-12 20:45:41 Proxy: Aguardando conexao...
+2024-05-14 15:51:31 Servidor: Inicializado com o dado: 0
+2024-05-14 15:51:31 Servidor: Aguardando conexao...
+2024-05-14 15:51:55 Proxy: Aguardando conexao...
 
-2024-05-12 20:46:24 Cliente 1: Consultando dado...
-2024-05-12 20:46:24 Proxy: Conexao estabelecida com o Cliente 1
-2024-05-12 20:46:24 Proxy: Enviando para o servidor a requisicao do Cliente 1
-2024-05-12 20:46:24 Servidor: Conexao estabelecida com a proxy
-2024-05-12 20:46:24 Servidor: Transmitindo o dado ----> 0
-2024-05-12 20:46:24 Servidor: Dado enviado para a proxy.
-2024-05-12 20:46:24 Proxy: Recebeu do servidor o dado---> 0
-2024-05-12 20:46:24 Proxy: Enviando para o Cliente 1 o dado---> 0
-2024-05-12 20:46:24 Cliente 1: Recebeu da proxy o dado---> 0
+2024-05-14 15:52:54 Cliente 1: Consultando dado...
+2024-05-14 15:52:54 Proxy: Conexao estabelecida com o Cliente 1
+2024-05-14 15:52:54 Proxy: Enviando para o servidor a requisicao do Cliente 1
+2024-05-14 15:52:54 Servidor: Conexao estabelecida com a proxy
+2024-05-14 15:52:54 Servidor: Transmitindo o dado ----> 0
+2024-05-14 15:52:54 Servidor: Dado enviado para a proxy.
+2024-05-14 15:52:54 Proxy: Recebeu do servidor o dado---> 0
+2024-05-14 15:52:54 Proxy: Enviando para o Cliente 1 o dado---> 0
+2024-05-14 15:52:54 Cliente 1: Recebeu da proxy o dado---> 0
 
-2024-05-12 20:46:52 Cliente 2: Modificando o dado do servidor para --> 2
-2024-05-12 20:46:52 Servidor: Conexao estabelecida com o Cliente 2
-2024-05-12 20:46:52 Servidor: Dado do servidor modificado para ----> 2
+2024-05-14 15:53:34 Cliente 2: Modificando o dado do servidor para --> 10
+2024-05-14 15:53:34 Servidor: Conexao estabelecida com o Cliente 2
+2024-05-14 15:53:34 Servidor: Dado do servidor modificado para ----> 10
 
-2024-05-12 20:47:07 Cliente 1: Consultando dado...
-2024-05-12 20:47:07 Proxy: Conexao estabelecida com o Cliente 1
-2024-05-12 20:47:07 Proxy: Enviando para o servidor a requisicao do Cliente 1
-2024-05-12 20:47:07 Servidor: Conexao estabelecida com a proxy
-2024-05-12 20:47:07 Servidor: Transmitindo o dado ----> 2
-2024-05-12 20:47:07 Servidor: Dado enviado para a proxy.
-2024-05-12 20:47:07 Proxy: Recebeu do servidor o dado---> 2
-2024-05-12 20:47:07 Proxy: Enviando para o Cliente 1 o dado---> 2
-2024-05-12 20:47:07 Cliente 1: Recebeu da proxy o dado---> 2
+2024-05-14 15:53:42 Cliente 1: Consultando dado...
+2024-05-14 15:53:42 Proxy: Conexao estabelecida com o Cliente 1
+2024-05-14 15:53:42 Proxy: Enviando para o servidor a requisicao do Cliente 1
+2024-05-14 15:53:42 Servidor: Conexao estabelecida com a proxy
+2024-05-14 15:53:42 Servidor: Transmitindo o dado ----> 10
+2024-05-14 15:53:42 Servidor: Dado enviado para a proxy.
+2024-05-14 15:53:42 Proxy: Recebeu do servidor o dado---> 10
+2024-05-14 15:53:42 Proxy: Enviando para o Cliente 1 o dado---> 10
+2024-05-14 15:53:42 Cliente 1: Recebeu da proxy o dado---> 10
 
-2024-05-12 20:49:08 Cliente 2: Modificando o dado do servidor para --> 3
-2024-05-12 20:49:08 Servidor: Conexao estabelecida com o Cliente 2
-2024-05-12 20:49:08 Servidor: Dado do servidor modificado para ----> 3
+2024-05-14 15:53:53 Cliente 2: Modificando o dado do servidor para --> 20
+2024-05-14 15:53:53 Servidor: Conexao estabelecida com o Cliente 2
+2024-05-14 15:53:53 Servidor: Dado do servidor modificado para ----> 20
 
-2024-05-12 20:49:09 Cliente 1: Consultando dado...
-2024-05-12 20:49:09 Proxy: Conexao estabelecida com o Cliente 1
-2024-05-12 20:49:09 Proxy: Enviando para o servidor a requisicao do Cliente 1
-2024-05-12 20:49:09 Servidor: Conexao estabelecida com a proxy
-2024-05-12 20:49:09 Servidor: Transmitindo o dado ----> 3
-2024-05-12 20:49:09 Servidor: Dado enviado para a proxy.
-2024-05-12 20:49:09 Proxy: Recebeu do servidor o dado---> 3
-2024-05-12 20:49:09 Proxy: Enviando para o Cliente 1 o dado---> 3
-2024-05-12 20:49:09 Cliente 1: Recebeu da proxy o dado---> 3
+2024-05-14 15:53:57 Cliente 1: Consultando dado...
+2024-05-14 15:53:57 Proxy: Conexao estabelecida com o Cliente 1
+2024-05-14 15:53:57 Proxy: Enviando para o servidor a requisicao do Cliente 1
+2024-05-14 15:53:57 Servidor: Conexao estabelecida com a proxy
+2024-05-14 15:53:57 Servidor: Transmitindo o dado ----> 20
+2024-05-14 15:53:57 Servidor: Dado enviado para a proxy.
+2024-05-14 15:53:57 Proxy: Recebeu do servidor o dado---> 20
+2024-05-14 15:53:57 Proxy: Enviando para o Cliente 1 o dado---> 20
+2024-05-14 15:53:57 Cliente 1: Recebeu da proxy o dado---> 20
 
-2024-05-12 20:49:13 Cliente 2: Modificando o dado do servidor para --> 4
-2024-05-12 20:49:13 Servidor: Conexao estabelecida com o Cliente 2
-2024-05-12 20:49:13 Servidor: Dado do servidor modificado para ----> 4
+2024-05-14 15:54:11 Cliente 2: Modificando o dado do servidor para --> 30
+2024-05-14 15:54:11 Servidor: Conexao estabelecida com o Cliente 2
+2024-05-14 15:54:11 Servidor: Dado do servidor modificado para ----> 30
 
-2024-05-12 20:49:15 Cliente 1: Consultando dado...
-2024-05-12 20:49:15 Proxy: Conexao estabelecida com o Cliente 1
-2024-05-12 20:49:15 Proxy: Enviando para o servidor a requisicao do Cliente 1
-2024-05-12 20:49:15 Servidor: Conexao estabelecida com a proxy
-2024-05-12 20:49:15 Servidor: Transmitindo o dado ----> 4
-2024-05-12 20:49:15 Servidor: Dado enviado para a proxy.
-2024-05-12 20:49:15 Proxy: Recebeu do servidor o dado---> 4
-2024-05-12 20:49:15 Proxy: Enviando para o Cliente 1 o dado---> 4
-2024-05-12 20:49:15 Cliente 1: Recebeu da proxy o dado---> 4
-
+2024-05-14 15:54:13 Cliente 1: Consultando dado...
+2024-05-14 15:54:13 Proxy: Conexao estabelecida com o Cliente 1
+2024-05-14 15:54:13 Proxy: Enviando para o servidor a requisicao do Cliente 1
+2024-05-14 15:54:13 Servidor: Conexao estabelecida com a proxy
+2024-05-14 15:54:13 Servidor: Transmitindo o dado ----> 30
+2024-05-14 15:54:13 Servidor: Dado enviado para a proxy.
+2024-05-14 15:54:13 Proxy: Recebeu do servidor o dado---> 30
+2024-05-14 15:54:13 Proxy: Enviando para o Cliente 1 o dado---> 30
+2024-05-14 15:54:13 Cliente 1: Recebeu da proxy o dado---> 30

@@ -1,7 +1,7 @@
 /* 
     Funcionalidade: Um servidor TESTE iterativo TCP/IP 
     Autor: Barbara Reis
-    Data da última modificação: 11/maio/2024 
+    Data da ultima modificacao: 11/maio/2024 
 */
 
 #include <stdio.h>
@@ -19,7 +19,7 @@
 #define MAXHOSTNAME 30
 
 void print_header(){
-    FILE *log_file = fopen("log.txt", "a"); // Abre o arquivo de log em modo de adição
+    FILE *log_file = fopen("log.txt", "a"); // Abre o arquivo de log em modo de adiÃ§Ã£o
 
     if (log_file == NULL) {
         perror("Erro ao abrir o arquivo de log do servidor.");
@@ -31,10 +31,10 @@ void print_header(){
     fprintf(log_file,"Barbara Reis - Trabalho pratico da disciplina Redes de computadores CI1244\n\n");
     fprintf(log_file,"===================================================================================\n"); 
 
-    printf("===================================================================================\n"); 
+    printf("===================================================================\n"); 
     printf("Logs do programa que implementa um servidor TCP/IP utilizando proxy\n");
     printf("Barbara Reis - Trabalho pratico da disciplina Redes de computadores CI1244\n");
-    printf("===================================================================================\n"); 
+    printf("===================================================================\n"); 
 
     fclose(log_file); // Fecha o arquivo de log
 }
@@ -75,7 +75,7 @@ int main (int argc, char *argv[]) {
 		exit (1);
 	}	
     
-    /* associa o socket com o endereco do servidor. Informa a porta que o socket ira operar*/
+    /* associa o socket com o endereco do servidor usando a porta conhecida para o serviÃ§o. Informa a porta que o socket ira operar*/
 	if (bind(server_socket, (struct sockaddr *) &serveraddr, sizeof(serveraddr)) < 0){
 		puts("Nao consegui fazer o bind" );
 		exit (1);
@@ -83,7 +83,7 @@ int main (int argc, char *argv[]) {
 
     /* prepara o servidor para receber conexoes */
     if(listen (server_socket, TAMFILA) < 0) {
-        puts("Erro ao escutar conexões no servidor!\n");
+        puts("Erro ao escutar conexoes no servidor!\n");
         exit(1);
     }
 
@@ -93,7 +93,7 @@ int main (int argc, char *argv[]) {
 	while (1){
 		serveraddrsize = sizeof(serveraddr);
 
-        /* estabelece uma conexão solicitada pelo cliente */
+        /* estabelece uma conexÃ£o solicitada pelo cliente */
 		if ((client_socket = accept(server_socket, (struct sockaddr *) &clientaddr,&serveraddrsize))<0){
             puts("Servidor nao conseguiu estabelecer conexao com o cliente\n");
             exit(1);
@@ -113,7 +113,7 @@ int main (int argc, char *argv[]) {
         if (strcmp(requisicao, "GET") == 0) {
             saveLog("Servidor: Conexao estabelecida com a proxy\n");
           
-            /* limpa o buffer antes de reutilizá-lo */
+            /* limpa o buffer antes de reutilizÃ¡-lo */
             memset(buffer, 0, sizeof(buffer));
 
             /* converte o dado atual para string para transmissao */
@@ -121,7 +121,7 @@ int main (int argc, char *argv[]) {
            
             saveLog_with_data("Servidor: Transmitindo o dado ----> %d\n", dado);
 
-            /* transmite o dado atual para o cliente 1 */
+            /* transmite o dado atual para a proxy  */
             if(write(client_socket, buffer, strlen(buffer)) != strlen(buffer)){
                 puts("Servidor nao conseguiu transmitir o dado atual para a proxy. Fechando a conexao..\n");
                 close(server_socket); 

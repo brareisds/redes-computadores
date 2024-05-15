@@ -1,7 +1,7 @@
 /* 
     Funcionalidade: Um cliente-proxy TCP/IP 
     Autor: Barbara Reis
-    Data da última modificação: 11/maio/2024 
+    Data da ultima modificacao: 11/maio/2024 
 */
 
 #include <stdio.h>
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
 
     /* chama o resolvedor DNS. Retorna uma struct contendo o end. IP do host */
     if((hp = gethostbyname(host)) == NULL){
-        puts("O DNS não retornou o endereço IP da proxy!\n");
+        puts("O DNS nÃ£o retornou o endereÃ§o IP da proxy!\n");
         exit(1);
     }
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]){
 
     /* abre o socket da proxy */
     if((sock_descr = socket(AF_INET,SOCK_STREAM,0)) < 0){
-        puts("Não consegui abrir o socket da proxy\n"); 
+        puts("NÃ£o consegui abrir o socket da proxy\n"); 
         exit(1);
     }
 
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]){
 
     /* conecta o socket aberto ao endereco da proxy */
     if(connect(sock_descr,(struct sockaddr*)&proxyaddr,sizeof(proxyaddr)) < 0){
-        puts("Não consegui conectar com a proxy!\n");
+        puts("NÃ£o consegui conectar com a proxy!\n");
         exit(1);
     }
     

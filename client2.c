@@ -1,7 +1,7 @@
 /* 
     Funcionalidade: Um cliente-servidor TCP/IP 
     Autor: Barbara Reis
-    Data da última modificação: 11/maio/2024 
+    Data da ultima modificacao: 11/maio/2024 
 */
 
 #include <stdio.h>
@@ -15,17 +15,16 @@
 
 #include "log_functions.h"
 
-
 int eh_inteiro(const char *dado) {
     char *endptr;
     strtol(dado, &endptr, 10);
 
-    // Se o ponteiro de término for o fim da string, eh inteiro.
+    // Se o ponteiro de termino for o fim da string, eh inteiro.
     if (*endptr == '\0') {
         return 1;
     }
 
-    return 0; // Não é um número inteiro
+    return 0; // Nao eh um numero inteiro
 }
 
 int main(int argc, char *argv[]){
@@ -50,7 +49,7 @@ int main(int argc, char *argv[]){
 
     /* chama o resolvedor DNS. Retorna uma struct contendo o end. IP do host */
     if((hp = gethostbyname(host)) == NULL){
-        puts("O DNS não retornou o endereço IP do servidor!\n");
+        puts("O DNS nao retornou o endereÃ§o IP do servidor!\n");
         exit(1);
     }
     
@@ -67,7 +66,7 @@ int main(int argc, char *argv[]){
 
     /* conecta o socket aberto ao endereco do servidor. Estabelece uma conexao com o servidor */
     if(connect(sock_descr,(struct sockaddr*)&serveraddr,sizeof(serveraddr)) < 0){
-        puts("Cliente 2 não conseguiu conectar ao servidor!\n");
+        puts("Cliente 2 nao conseguiu conectar ao servidor!\n");
         exit(1);
     }
 
@@ -79,7 +78,7 @@ int main(int argc, char *argv[]){
 
     /* transmite a mensagem para o servidor e verifica o sucesso da msg */
     if(write(sock_descr, mensagem, strlen(mensagem)) != strlen(mensagem)){
-        puts("Cliente 2 não conseguiu transmitir dados para o servidor! Fechando a conexao..\n");
+        puts("Cliente 2 nao conseguiu transmitir dados para o servidor! Fechando a conexao..\n");
         close(sock_descr);
         exit(1);
     }
@@ -89,7 +88,6 @@ int main(int argc, char *argv[]){
   
     exit(0);
 }
-
 
 
 

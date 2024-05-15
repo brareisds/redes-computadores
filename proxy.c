@@ -1,7 +1,7 @@
 /* 
     Funcionalidade: Uma proxy TCP/IP 
     Autor: Barbara Reis
-    Data da última modificação: 11/maio/2024 
+    Data da ultima modificacao: 11/maio/2024 
 */
 
 #include <stdio.h>
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 
     /* chama o resolvedor DNS. Retorna uma struct contendo o end. IP do host do servidor */
     if((hp_serv = gethostbyname(host)) == NULL) {
-        puts("O DNS não retornou o endereço IP do servidor!\n");
+        puts("O DNS nÃ£o retornou o endereÃ§o IP do servidor!\n");
         exit(1);
     }
 
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 
     /* chama o resolvedor DNS. Retorna uma struct contendo o end. IP agora do host da proxy*/
     if((hp_proxy = gethostbyname(host)) == NULL) {
-        puts("O DNS não retornou o endereço IP da proxy!\n");
+        puts("O DNS nÃ£o retornou o endereÃ§o IP da proxy!\n");
         exit(1);
     }
 
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 
     /* abre o socket da proxy */
     if((proxy_socket = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-        puts("Não consegui abrir o socket da proxy!\n");
+        puts("NÃ£o consegui abrir o socket da proxy!\n");
         exit(1);
     }
 
@@ -73,12 +73,10 @@ int main(int argc, char *argv[]) {
 
     saveLog("Proxy: Aguardando conexao...\n\n");
 
-    
-
     while(1) {
         proxyaddrsize = sizeof(proxyaddr);
 
-        /* estabelece uma conexão entre o Cliente 1 e a proxy */
+        /* estabelece uma conexÃ£o entre o Cliente 1 e a proxy */
         if((client_socket = accept(proxy_socket, (struct sockaddr*)&clientaddr, &proxyaddrsize)) < 0) {
             puts("Proxy nao conseguiu aceitar a conexao!\n");
             exit(1);
@@ -102,7 +100,7 @@ int main(int argc, char *argv[]) {
 
         /* recebe a requisicao do Cliente 1. Nesse caso do tipo GET */
         if((nread = read(client_socket, buf, BUFSIZ)) < 0){
-            puts("Proxy nao conseguiu receber a requisicao do cliente 1. Fechando a conexão..\n");
+            puts("Proxy nao conseguiu receber a requisicao do cliente 1. Fechando a conexÃ£o..\n");
             close(client_socket);
             close(server_socket);
             exit(1);
@@ -113,7 +111,7 @@ int main(int argc, char *argv[]) {
 
         /* transmite a requisicao feita pelo cliente para o servidor */
         if(write(server_socket, requisicao , strlen(requisicao)) != strlen(requisicao)){
-            puts("Proxy nao conseguiu transmitir a requisicao do cliente 1 para o servidor. Fechando a conexão..\n");
+            puts("Proxy nao conseguiu transmitir a requisicao do cliente 1 para o servidor. Fechando a conexÃ£o..\n");
             close(client_socket);
             close(server_socket);
             exit(1);
@@ -124,7 +122,7 @@ int main(int argc, char *argv[]) {
 
         /* recebe os dados transmitidos pelo servidor */
         if((nread = read(server_socket, buf, BUFSIZ)) < 0){
-            puts("Proxy nao conseguiu receber os dados do servidor. Fechando a conexão..\n");
+            puts("Proxy nao conseguiu receber os dados do servidor. Fechando a conexÃ£o..\n");
             close(client_socket);
             close(server_socket);
             exit(1);
@@ -135,7 +133,7 @@ int main(int argc, char *argv[]) {
         
         /* transmite os dados recebidos pelo servidor para o Cliente 1 */
         if(write(client_socket, buf, strlen(buf)) != strlen(buf)){
-            puts("Proxy nao conseguiu transmitir os dados do servidor para o cliente 1. Fechando a conexão..\n");
+            puts("Proxy nao conseguiu transmitir os dados do servidor para o cliente 1. Fechando a conexÃ£o..\n");
             close(client_socket);
             close(server_socket);
             exit(1);
