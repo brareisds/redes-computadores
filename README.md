@@ -18,7 +18,7 @@ A implementação do sistema cliente-servidor TCP/IP foi feita em linguagem C, u
 - `proxy.c`: Código fonte da proxy.
 - `cliente_leitura.c`: Código fonte do cliente para leitura do dado.
 - `cliente_escrita.c`: Código fonte do cliente para escrita do dado.
-- `log_testes`: Log dos testes realizados.
+- `log.txt`: Log dos testes realizados.
 
 ## Como Executar
 
